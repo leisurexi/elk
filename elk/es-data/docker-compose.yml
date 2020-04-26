@@ -1,0 +1,33 @@
+version: "3"
+services:
+  es-master:
+    container_name: es-data
+    hostname: es-data
+    image: leisurexi/elasticsearch:7.1.0
+    privileged: true
+    ports:
+      - 9200:9200
+      - 9300:9300
+    volumes:
+      - ./elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+      - ./data:/usr/share/elasticsearch/data
+      - ./logs:/usr/share/elasticsearch/logs
+    environment:
+      - "ES_JAVA_OPTS=-Xms2g -Xmx2g"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+  logstash:
+    container_name: logstash
+    hostname: logstash
+    image: docker.elastic.co/logstash/logstash:7.1.0
+    command: logstash -f ./config/logstash.conf
+    volumes:
+      - ./logstash.conf:/usr/share/logstash/config/logstash.conf
+      - ./logstash.yml:/usr/share/logstash/config/logstash.yml
+    environment:
+      - elasticsearch.hosts=http://192.168.239.133:9200
+    ports:
+      - 4560:4560
+      - 5044:5044
