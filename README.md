@@ -199,18 +199,6 @@ docker-compose up -d
 
 ![](http://ww1.sinaimg.cn/large/006Vpl27ly1ge66se2rosj30tc06adgb.jpg)
 
-然后进入容器，创建默认的用户和分组
-
-```shell
-# 进入容器
-docker exec -it es-master bash
-```
-
-```shell
-# 激活默认用户并设置密码
-bin/elasticsearch-setup-passwords interactive
-```
-
 ### 数据节点
 
 首先设置数据节点的配置文件 `elasticsearch.yml`，如下：
