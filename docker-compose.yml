@@ -1,0 +1,8 @@
+version: "3"
+services:
+  log:
+    container_name: log
+    hostname: log
+    build: .
+    ports:
+      - 8080:8080
